@@ -1,6 +1,7 @@
-numpy
 streamlit
-pandas
 streamlit_option_menu
+streamlit-extras
+numpy
+pandas
 requests
 matplotlib
