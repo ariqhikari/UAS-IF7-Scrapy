@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
+import matplotlib.pyplot as plt
 
 
 @st.cache_data
@@ -21,6 +22,26 @@ def Analisis_4() :
     st.header("Ini Tab 4")
 def Analisis_5() :
     st.header("Ini Tab 5")
+    day_df= pd.read_csv('dataset/adisya-day_df.csv')
+    anomalies= pd.read_csv('dataset/adisya-anomalies.csv')
+    day_df['dteday'] = pd.to_datetime(day_df['dteday'])
+    anomalies['dteday'] = pd.to_datetime(anomalies['dteday'])
+
+    st.dataframe(day_df)
+    st.dataframe(anomalies)
+    
+
+    st.title('Grafik Jumlah Penyewaan Sepeda')
+    fig, ax = plt.subplots()
+    ax.plot(day_df['dteday'], day_df['cnt'])
+    ax.scatter(anomalies['dteday'], anomalies['cnt'], c='red')
+    ax.set_xlabel('Tanggal')
+    ax.set_ylabel('Jumlah penyewaan sepeda')
+    ax.tick_params(axis='x', rotation=90)
+    ax.set_xticklabels([])  # Cara 1: Set label sumbu x menjadi daftar kosong
+
+    st.pyplot(fig)
+
 def Analisis_6() :
     st.header("Ini Tab 6")
 
