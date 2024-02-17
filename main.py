@@ -18,36 +18,36 @@ def Dataset() :
 
     st.write('Dataset ini adalah kumpulan data tentang penyewaan sepeda berbagi di Washington D.C., USA, selama dua tahun (2011 dan 2012). Data tersedia dalam format per jam dan per hari. Informasi yang tersedia meliputi tanggal, musim, tahun, bulan, jam, hari libur, hari kerja, kondisi cuaca, suhu, kelembapan, kecepatan angin, dan jumlah pengguna yang menyewa sepeda (baik pengguna casual maupun terdaftar), serta total jumlah sewa sepeda. Tujuan utama dataset ini adalah untuk prediksi jumlah sewa sepeda berdasarkan lingkungan dan musim, serta deteksi peristiwa atau anomali yang berkaitan dengan pola sewa sepeda.')
 
-    day = pd.read_csv('dataset/day.csv')
-    hour = pd.read_csv('dataset/hour.csv')
+    day = load_data('dataset/day.csv')
+    hour = load_data('dataset/hour.csv')
 
-    st.write('Tabel Day')
+    st.write('Tabel Penyewaan Sepeda Harian')
     st.dataframe(day)
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
-    st.write('Tabel Hour')
+    st.write('Tabel Penyewaan Sepeda per Jam')
     st.dataframe(hour)
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
 def Analisis_1() :
     st.header("Pertanyaan 1")
     st.subheader('Bagaimana perbandingan jumlah Penyewaan sepeda antara tahun 2011 dan 2012?')
     st.caption('10122238 - Titan El Haqi')
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
-    cnt2011 = pd.read_csv('dataset/titan-cnt2011.csv')
-    cnt2012 = pd.read_csv('dataset/titan-cnt2012.csv')
+    cnt2011 = load_data('dataset/titan-cnt2011.csv')
+    cnt2012 = load_data('dataset/titan-cnt2012.csv')
 
     total2011 = cnt2011['cnt'].sum()
     total2012 = cnt2012['cnt'].sum()
 
     st.write('Tabel Jumlah Penyewaan Sepeda Tahun 2011')
     st.dataframe(cnt2011)
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
     st.write('Tabel Jumlah Penyewaan Sepeda Tahun 2012')
     st.dataframe(cnt2012)
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
     fig, ax = plt.subplots()
     ax.bar(['2011', '2012'], [total2011, total2012], color='green')
@@ -55,10 +55,8 @@ def Analisis_1() :
     ax.set_ylabel('Jumlah Penyewa')
     ax.set_xlabel('Tahun')
 
-    # Tampilkan plot di Streamlit
     st.pyplot(fig)
 
-    #Expander Grafik
     with st.expander("Penjelasan Grafik Perbandingan Jumlah Penyewa Sepeda, 2011 dan 2012") :
         st.write('Dilihat dari analisis pada dataset Bike Sharing, terdapat peningkatan jumlah penyewa dari tahun 2011 ke tahun 2012 sebanyak 64.87%. Hasil ini didapatkan dari mengambil selisih penyewa pada tahun 2011 dan 2012, kemudian dibagi dengan total penyewa pada tahun 2011.') 
     
@@ -66,18 +64,16 @@ def Analisis_2() :
     st.header("Pertanyaan 2")
     st.subheader('Apakah ada penurunan signifikan dalam penggunaan sepeda saat cuaca buruk?')
     st.caption('10122241 - Marsya Awliya Sabrina')
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
-    percentage_reduction = pd.read_csv('dataset/marsya-percentage_reduction.csv')
+    percentage_reduction = load_data('dataset/marsya-percentage_reduction.csv')
 
-    st.write('Tabel Percentage Reduction')
+    st.write('Tabel Persentase Penurunan Penggunaan Sepeda saat Cuaca Buruk')
     st.dataframe(percentage_reduction)
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
-    # Buat aplikasi Streamlit
     st.title('Persentase Penurunan Penggunaan Sepeda saat Cuaca Buruk')
 
-    # Tampilkan plot menggunakan Matplotlib
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.plot(percentage_reduction, marker='o')
     ax.set_title('Persentase Penurunan Penggunaan Sepeda saat Cuaca Buruk')
@@ -85,7 +81,6 @@ def Analisis_2() :
     ax.set_ylabel('Persentase Penurunan')
     ax.grid(True)
 
-    # Tampilkan plot di aplikasi Streamlit
     st.pyplot(fig)
 
     #Expander Grafik
@@ -96,26 +91,28 @@ def Analisis_3() :
     st.header("Pertanyaan 3")
     st.subheader('Apakah ada pengaruh hari libur terhadap jumlah sepeda yang disewa?')
     st.caption('10122254 - Ariq Hikari Hidayat')
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
-    holiday_data= pd.read_csv('dataset/ariq-holiday_data.csv')
-    non_holiday_data= pd.read_csv('dataset/ariq-non_holiday_data.csv')
+    holiday_data= load_data('dataset/ariq-holiday_data.csv')
+    non_holiday_data= load_data('dataset/ariq-non_holiday_data.csv')
 
-    st.write('Tabel Holiday')
+    st.write('Tabel Jumlah Penyewaan Sepeda pada Hari Libur')
     st.dataframe(holiday_data)
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
-    st.write('Tabel Non Holiday')
+    st.write('Tabel Jumlah Penyewaan Sepeda pada Hari Non-Libur')
     st.dataframe(non_holiday_data)
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
     avg_rental_holiday = holiday_data['cnt'].mean()
     avg_rental_non_holiday = non_holiday_data['cnt'].mean()
 
+    st.title('Grafik Rata-rata Penyewaan Sepeda pada Hari Libur vs Non-Libur')
+
     # Plot
     fig, ax = plt.subplots()
     ax.bar(['Weekend', 'Weekday'], [avg_rental_holiday, avg_rental_non_holiday])
-    ax.set_title('Grafik Rata-rata Penyewaan Sepeda pada Hari Libur vs Non-Libur')
+    ax.set_title('Rata-rata Penyewaan Sepeda pada Hari Libur vs Non-Libur')
     ax.set_ylabel('Jumlah Rata-Rata Penyewaan Sepeda')
 
     # Tampilkan plot di Streamlit
@@ -129,13 +126,13 @@ def Analisis_4() :
     st.header("Pertanyaan 4")
     st.subheader('Apa pengaruh faktor cuaca terhadap jumlah sewa sepeda harian?')
     st.caption('10122257 - M. Ghazy Al H. H.')
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
-    average_rentals_by_weather = pd.read_csv('dataset/ghazy-average_rentals_by_weather.csv')
+    average_rentals_by_weather = load_data('dataset/ghazy-average_rentals_by_weather.csv')
 
     st.write('Tabel Average Rentals by Weather')
     st.dataframe(average_rentals_by_weather)
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
     # Tampilkan plot menggunakan Matplotlib
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -156,21 +153,21 @@ def Analisis_5() :
     st.header("Pertanyaan 5")
     st.subheader('Bagaimana cara mendeteksi peristiwa atau anomali dalam data penyewaan sepeda?')
     st.caption('10122260 - Adisya Ainun Fatihah')
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
     
-    day_df= pd.read_csv('dataset/adisya-day_df.csv')
-    anomalies= pd.read_csv('dataset/adisya-anomalies.csv')
+    day_df= load_data('dataset/adisya-day_df.csv')
+    anomalies= load_data('dataset/adisya-anomalies.csv')
 
     day_df['dteday'] = pd.to_datetime(day_df['dteday'])
     anomalies['dteday'] = pd.to_datetime(anomalies['dteday'])
 
     st.write('Tabel Day')
     st.dataframe(day_df)
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
     st.write('Tabel Anomalies')
     st.dataframe(anomalies)
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
     
     st.title('Grafik Jumlah Penyewaan Sepeda')
     fig, ax = plt.subplots()
@@ -179,7 +176,7 @@ def Analisis_5() :
     ax.set_xlabel('Tanggal')
     ax.set_ylabel('Jumlah penyewaan sepeda')
     ax.tick_params(axis='x', rotation=90)
-    ax.set_xticklabels([])  # Cara 1: Set label sumbu x menjadi daftar kosong
+    ax.set_xticklabels([])
 
     st.pyplot(fig)
 
@@ -191,22 +188,22 @@ def Analisis_6() :
     st.header("Pertanyaan 6")
     st.subheader('Bagaimana distribusi waktu penyewaan sepeda?')
     st.caption('10122264 - Muhammad Naufal Ghifari')
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
     #Load Dataset
-    daily_trend = pd.read_csv('dataset/naufal-daily_trend.csv')
-    weekly_seasonal_trend = pd.read_csv('dataset/naufal-weekly_seasonal_trend.csv')
+    daily_trend = load_data('dataset/naufal-daily_trend.csv')
+    weekly_seasonal_trend = load_data('dataset/naufal-weekly_seasonal_trend.csv')
 
     #Pembuatan Tabel
     st.write('Tabel Penyewaan Sepeda Harian')
     st.dataframe(daily_trend.head())
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
     #Membuat Judul
     st.subheader('Grafik Penyewaan Sepeda Harian')
     def main():
         # Baca dataset
-        daily_trend = pd.read_csv('dataset/naufal-daily_trend.csv')
+        daily_trend = load_data('dataset/naufal-daily_trend.csv')
 
         # Visualisasi
         fig, ax = plt.subplots(figsize=(12, 6))
@@ -222,11 +219,11 @@ def Analisis_6() :
     with st.expander("Penjelasan Grafik Penyewaan Sepeda Mingguan") :
         st.write('Terdapat peningkatan penyewaan pada jam-jam tertentu, khususnya selama periode sibuk pergi dan pulang kerja.') 
 
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
     st.write('Tabel Penyewaan Sepeda Mingguan')
     st.dataframe(weekly_seasonal_trend.head())
-    st.write('<hr>', unsafe_allow_html=True) #hr Garis Pemisah
+    st.write('<hr>', unsafe_allow_html=True)
 
     #Membuat Judul
     st.subheader('Grafik Penyewaan Sepeda Mingguan')
@@ -240,7 +237,7 @@ def Analisis_6() :
         st.pyplot()
 
     #Memuat data
-    weekly_seasonal_trend = pd.read_csv('dataset/naufal-weekly_seasonal_trend.csv')
+    weekly_seasonal_trend = load_data('dataset/naufal-weekly_seasonal_trend.csv')
 
     st.set_option('deprecation.showPyplotGlobalUse', False)
 
