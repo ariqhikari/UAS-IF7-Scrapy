@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
+import matplotlib as plt
+import matplotlib.pylab as plt
 from streamlit_option_menu import option_menu
+
 
 
 @st.cache_data
@@ -12,7 +15,34 @@ def load_data(url) :
 def Dataset() :
     st.header("Pengenalan Dataset")
 def Analisis_1() :
-    st.header("Ini Tab 1")
+    #Dataset
+    dteday_cnt = pd.read_csv('dataset/titan-dteday_cnt.csv')
+    #Extra
+    st.header("Pertanyaan 1")
+    st.subheader("Seperti apa perbandingan jumlah peminjaman sepeda antara tahun 2011 dan 2012?")
+    st.caption("10122238 - Titan El Haqi")
+    st.dataframe(dteday_cnt.head())
+    st.subheader("Jumlah peminjam sepeda pada tahun 2011 dan 2012")
+    #Seleksi data 2011 dan 2012
+    cnt2011 = dteday_cnt[dteday_cnt['dteday'].str[:4] == '2011']
+    cnt2012 = dteday_cnt[dteday_cnt['dteday'].str[:4] == '2012']
+    #Totalkan
+    total2011 = cnt2011['cnt'].sum()
+    total2012 = cnt2012['cnt'].sum()
+    #Data untuk ditampilkan
+    data = {'Year': ['2011', '2012'], 'Total Rentals': [total2011, total2012]}
+    df = pd.DataFrame(data)
+    #Tampilkan pada chart
+    st.bar_chart(df.set_index('Year'))
+    #Menampilkan jumlah dan kesimpulan  
+    st.write('Jumlah penyewa pada tahun 2011:', total2011)
+    st.write('Jumlah penyewa pada tahun 2012:', total2012)
+    
+    with st.expander("Kesimpulan") :
+        st.write("Dilihat dari analisis pada dataset Bike Sharing, terdapat peningkatan jumlah penyewa dari tahun 2011 ke tahun 2012 sebanyak 64.87%. Hasil ini didapatkan dari mengambil selisih penyewa pada tahun 2011 dan 2012, kemudian dibagi dengan total penyewa pada tahun 2011.")
+    
+    
+    
 def Analisis_2() :
     st.header("Ini Tab 2")
 def Analisis_3() :
